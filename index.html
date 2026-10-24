@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Цифровий зошит (Терешківська школа)</title>
+    <title>Цифровий зошит (Вебверсія)</title>
     <style>
         body {
             margin: 0;
@@ -157,7 +157,6 @@
             drawGrid();
         }
 
-        // Функція збереження розв'язку учня у вигляді файлу зображення
         function saveAsImage() {
             const link = document.createElement('a');
             link.download = 'rozvjazok_zavdannya.png';
@@ -168,7 +167,13 @@
         function startPosition(e) {
             e.preventDefault();
             painting = true;
-            draw(e);
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.beginPath(); // Обов'язково починаємо новий шлях
+            ctx.moveTo(x, y); // Переносимо курсор у точку торкання без проведення лінії
         }
 
         function endPosition(e) {
@@ -191,8 +196,6 @@
 
             ctx.lineTo(x, y);
             ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
         }
 
         canvas.addEventListener('pointerdown', startPosition);
