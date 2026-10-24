@@ -98,6 +98,11 @@
         const ctx = canvas.getContext('2d');
         const container = document.getElementById('container');
 
+        // Оголошуємо змінні на самому початку, щоб уникнути помилок ініціалізації
+        let currentColor = 'black';
+        let currentImage = null;
+        let painting = false;
+
         function resizeCanvas() {
             canvas.width = container.clientWidth;
             canvas.height = container.clientHeight;
@@ -105,9 +110,6 @@
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
-
-        let currentColor = 'black';
-        let currentImage = null;
 
         function setColor(color) {
             currentColor = color;
@@ -154,8 +156,6 @@
             drawGrid();
         }
 
-        let painting = false;
-
         function startPosition(e) {
             e.preventDefault();
             painting = true;
@@ -186,7 +186,6 @@
             ctx.moveTo(x, y);
         }
 
-        // Використовуємо універсальні Pointer Events для миші, пальців і стілусів
         canvas.addEventListener('pointerdown', startPosition);
         canvas.addEventListener('pointerup', endPosition);
         canvas.addEventListener('pointermove', draw);
